@@ -29,7 +29,7 @@ class WebhookController extends Controller
             throw new StripeException('Unknown stripe object type in webhook');
         }
         $stripeEventApi = new StripeEventApi();
-        if (!$stripeEventObject = $stripeEventApi->retrieve($requestData->id)) {
+        if (!$stripeEventObject = $stripeEventApi->retrieve($requestData->id, $requestData->account ? ['stripe_account' => $requestData->account] : [])) {
             throw new StripeException(
                 sprintf('Event does not exists, id %s', $requestData->id)
             );
